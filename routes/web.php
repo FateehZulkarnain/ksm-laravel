@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\StaffController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,4 +28,14 @@ Route::get('/blade', function () {
 
 Route::get('/blade1', function () {
     return view('child1');
+});
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+// Route::middleware('auth')->resource('staffs', StaffController::class); //<--ini kalau nak buat satu persatu route
+
+Route::middleware('auth')->group(function() {
+    Route::resource('staffs', StaffController::class);
 });
